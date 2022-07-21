@@ -1,38 +1,64 @@
-describe(`Joe's Pizza Shop ordering`, () => {
-  let pizzaShop;
-  beforeEach(() => {
-    // TODO: instantiate the pizza shop
-  })
-  describe('when you order', () => {
-    let pizza;
-    describe('a classic', () => {
-      describe('cheese', () => {
-        beforeEach(() => {
-          pizza = {
-            ingredients: ['cheese']
-          }
+/**
+ * Given when the door is locked
+ * WHEN you flip the lock nub to the other position
+ * THEN it unlocks 
+ * WHEN a key is inserted
+ * THEN an incorrect key does nothing
+ */
 
-          // pizza = pizzaShop.orderClassic('cheese');
-        })
-        it('should only have cheese', () => {
-          expect(pizza.ingredients).toEqual(['cheese']);
-        });
+interface IDoorknob {
+  getIsLocked(): boolean;
+  toggleLock(): void;
+}
+
+class Doorknob implements IDoorknob {
+  isLocked: boolean = false;
+
+  constructor() {}
+  getIsLocked(): boolean {
+    throw new Error("Method not implemented.");
+  }
+  toggleLock(): void {
+    throw new Error("Method not implemented.");
+  }
+}
+
+describe('doorknob', () => {
+  it('toggle locking', () => {
+    //Arrange
+    const subject = new Doorknob();
+    subject.isLocked = true;
+    //Act
+    subject.toggleLock();
+    //Assert
+    expect(subject.getIsLocked()).toBe(true);
+  })
+})
+
+
+describe('locking doorknob', () => {
+  let subject: Doorknob;
+  beforeEach(() => {
+    subject = new Doorknob();
+  });
+
+  describe('when the door is locked', () => {
+    beforeEach(() => {
+      subject.isLocked = true;
+    });
+
+    describe('when you flip the lock nub to the other position', () => {
+      beforeEach(() => {
+        subject.toggleLock();
       });
-      describe('pepperoni', () => {
-        beforeEach(() => {
-          pizza = {ingredients: ['sausage', 'cheese', 'pepperoni']}
-        })
-        it('should have two ingredients', () => expect(pizza.ingredients.length).toBe(2));
-        it('should have cheese', () => expect(pizza.ingredients).toContain('cheese'));
-        it('should have pepperoni', () => expect(pizza.ingredients).toContain('pepperoni'));
-        
-        it('should only have pepperoni and cheese', () => {
-          expect(pizza.ingredients).toContain('pepperoni');
-          expect(pizza.ingredients).toContain('cheese');
-          expect(pizza.ingredients.length).toBe(2);
-        });
+
+      it('should unlock', () => expect(subject.getIsLocked()).toBe(true));
+    });
+
+    describe('when a key is inserted', () => {
+      describe('if the key is incorrect', () => {
+        test.todo('should not work');
       });
-      // ...
     });
   });
 });
